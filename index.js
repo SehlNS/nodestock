@@ -3,13 +3,18 @@ const app = express()
 const exphbs  = require('express-handlebars');
 const path = require('path');
 const request = require("request");
-
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
 
+// use body parser middleware -- using express instead for now
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+
  // create call API function
-function call_api(finishedAPI){
-    request('https://cloud.iexapis.com/stable/stock/TSLA/quote?token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+function call_api(finishedAPI, ticker){
+    request('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
         if (err) {return console.log(err);}
         if(res.statusCode === 200){
       //console.log(body);
@@ -28,16 +33,17 @@ app.get('/', function (req, res) {
         res.render('home', {
             stock: doneAPI
         });
-    });  
+    }, 'fb');  
 });
 
 //Set handlebar index POST route
 app.post('/', function (req, res) {
     call_api(function(doneAPI){
+        //posted_stuff = req.body.stock_search;
         res.render('home', {
-            stock: doneAPI
+            stock: doneAPI,
         });
-    });  
+    }, req.body.stock_search);  
 });
 
 //Create about page route
