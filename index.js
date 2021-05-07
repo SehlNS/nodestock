@@ -12,7 +12,6 @@ const helpers = require('handlebars-helpers');
 // use body parser middleware -- using express instead for now
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
  
  // create call API function
 function call_api(finishedAPI, ticker){
@@ -46,7 +45,7 @@ app.post('/', function (req, res) {
         res.render('ticker_page', {
             stock: doneAPI,
         });
-    }, req.body.stock_search);  
+    }, req.body.stock_search.toLowerCase().trim());  
 });
 
 //Create about page route
