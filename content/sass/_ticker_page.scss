@@ -10,9 +10,15 @@
         display:flex;
         align-items: center;
 
-        div:nth-child(2){
+        .negative{
             font-size: 20px;
             color: $stock_red;
+            margin-left: 15px;
+        }
+
+        .positive{
+            font-size: 20px;
+            color: $stock_green;
             margin-left: 15px;
         }
     }

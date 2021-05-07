@@ -6,10 +6,13 @@
     <h1><b>{{stock.companyName}}</b></h1>
     <div class="price">
         <div>${{stock.latestPrice}}</div>
-        <div>{{stock.change}}</div>
+       {{#negPosChange stock.change}}
+             {{test}}
+        {{/negPosChange}}
         </div>
     <div class="subtext">{{stock.primaryExchange}}</div>
 </div>
+
 
 
 <div class="row">

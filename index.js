@@ -7,6 +7,26 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 const helpers = require('handlebars-helpers');
 
+const hbs = exphbs.create({
+
+    //create custom helpers here
+    helpers:{
+        negPosChange: function(value, options){
+            if(value > 0) {
+                return "<div class=\"positive\">+" + options.fn({test: value}) + "</div>";
+              }
+              else if(value < 0){
+                return "<div class=\"negative\">" + options.fn({test: value}) + "</div>";
+              }
+
+              else{
+                return "<div>" + options.fn({test: value}) + "</div>";
+              }
+        }
+    }
+
+});
+
 
 
 // use body parser middleware -- using express instead for now
@@ -25,7 +45,7 @@ function call_api(finishedAPI, ticker){
 }
 
 //Set handlebars middleware
-app.engine('handlebars', exphbs());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 
