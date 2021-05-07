@@ -7,14 +7,10 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
 
-
-// use body parser middleware -- using express instead for now
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
 const hbs = exphbs.create({
 
     //create custom helpers here
+    defaultLayout: 'main',
     helpers:{
         negPosChange: function(value, options){
             if(value > 0) {
@@ -31,6 +27,17 @@ const hbs = exphbs.create({
     }
 
 });
+
+//Set handlebars middleware
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+
+
+// use body parser middleware -- using express instead for now
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
  
  // create call API function
 function call_api(finishedAPI, ticker){
@@ -43,9 +50,7 @@ function call_api(finishedAPI, ticker){
     });
 }
 
-//Set handlebars middleware
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+
 
 
 //Set handlebar index GET route
