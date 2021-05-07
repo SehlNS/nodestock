@@ -7,7 +7,10 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
 
-const hbs = exphbs.create({
+
+
+//Set handlebars middleware
+app.engine('handlebars', exphbs.create({
 
     //create custom helpers here
     defaultLayout: 'main',
@@ -26,10 +29,7 @@ const hbs = exphbs.create({
         }
     }
 
-});
-
-//Set handlebars middleware
-app.engine('handlebars', hbs.engine);
+}).engine);
 app.set('view engine', 'handlebars');
 
 
