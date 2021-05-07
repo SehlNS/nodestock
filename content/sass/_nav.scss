@@ -1,0 +1,18 @@
+.navbar{
+    background-color:#1a1a1b;
+}
+.navbar-brand{
+    padding-top:0;
+}
+
+a.navbar-brand img {
+    width: 115px;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color:$body_color;
+}
+
+.navbar-dark .navbar-toggler{
+    border:none;
+}

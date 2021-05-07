@@ -1,7 +1,30 @@
-.container{
-    background-color: black;
+$body_color:#e6e6e6;
+$brand-primary:#f4b33b;
+$background_black:#222223;
+$brand_font:'Roboto', sans-serif;
+$dark_grey: #545454;
+$light_grey:#ababab;
+$stock_red:#dc3545;
+
+*{
+    font-family: $brand_font;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+    color:$body_color;
+}
+
+.subtext {
+    font-size: 12px;
+    color: $light_grey;
+}
+
+html, 
+body {
+    height: 100%;
 }
 
 body{
-    font-size:18px;
+    color:#fff;
+    background-color:$background-black;
 }

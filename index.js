@@ -5,13 +5,15 @@ const path = require('path');
 const request = require("request");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
+const helpers = require('handlebars-helpers');
+
 
 
 // use body parser middleware -- using express instead for now
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
+ 
  // create call API function
 function call_api(finishedAPI, ticker){
     request('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
@@ -27,10 +29,11 @@ function call_api(finishedAPI, ticker){
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+
 //Set handlebar index GET route
-app.get('/', function (req, res) {
+app.get('/ticker_page.html', function (req, res) {
     call_api(function(doneAPI){
-        res.render('home/home', {
+        res.render('ticker_page', {
             stock: doneAPI
         });
     }, 'fb');  
@@ -40,7 +43,7 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
     call_api(function(doneAPI){
         //posted_stuff = req.body.stock_search;
-        res.render('home/home', {
+        res.render('ticker_page', {
             stock: doneAPI,
         });
     }, req.body.stock_search);  
@@ -51,8 +54,16 @@ app.get('/about.html', function (req, res) {
     res.render('about');
 });
 
+//Create about page route
+app.get('/', function (req, res) {
+    res.render('home/home', {layout : 'home-template'});
+});
+
+
 // Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 
 
 app.listen(PORT, () => console.log('Server listening on port' + PORT));
+
+
