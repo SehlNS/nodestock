@@ -5,7 +5,12 @@ const path = require('path');
 const request = require("request");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
-const helpers = require('handlebars-helpers');
+
+
+
+// use body parser middleware -- using express instead for now
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 const hbs = exphbs.create({
 
@@ -26,12 +31,6 @@ const hbs = exphbs.create({
     }
 
 });
-
-
-
-// use body parser middleware -- using express instead for now
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
  
  // create call API function
 function call_api(finishedAPI, ticker){
