@@ -78,10 +78,13 @@ $bg-height: 50px;
 /* Main styles */
 body.home {
 
-    @media(max-width:400px){
+    @media(max-width:500px){
     .home-logo img{
-        width:100%;
+        width:200px;
     }
+
+    margin-top:0;
+    padding-top:150px;
 }
     
 
