@@ -6,11 +6,10 @@ const request = require("request");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
-
-
-
 app.engine('handlebars', exphbs({
+    //Include helpers here
     helpers:{
+        //check if price change was negative or poositive
         negPosChange: function(value, options){
             if(value > 0) {
                 return "<div class=\"positive\">+" + options.fn({test: value}) + "</div>";
