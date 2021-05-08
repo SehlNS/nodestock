@@ -1,6 +1,7 @@
 $body_color:#e6e6e6;
-$brand-primary:#f4b33b;
-$background_black:#222223;
+$brand-primary:#f08d7e;
+$brand-secondary:#e2bab1;
+$background_black:#1a1a1b;
 $brand_font:'Roboto', sans-serif;
 $dark_grey: #545454;
 $light_grey:#ababab;
@@ -15,6 +16,16 @@ h1,h2,h3,h4,h5,h6,p{
     color:$body_color;
 }
 
+p a{
+    color:$brand-secondary;
+    text-decoration:none;
+
+    &:hover{
+        color:$brand-primary;
+        transition: 0.5s;
+    }
+}
+
 .subtext {
     font-size: 12px;
     color: $light_grey;
@@ -26,6 +37,71 @@ body {
 }
 
 body{
+    padding-top:70px;
     color:#fff;
     background-color:$background-black;
+}
+
+
+/* Background data (Original source: https://subtlepatterns.com/grid-me/) */
+$bg-url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC";
+$bg-width: 50px;
+$bg-height: 50px;
+
+/* Animations */
+@-webkit-keyframes bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@-moz-keyframes    bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@-o-keyframes      bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+@keyframes         bg-scrolling-reverse {
+  100% { background-position: $bg-width $bg-height; }
+}
+
+@-webkit-keyframes bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@-moz-keyframes    bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@-o-keyframes      bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+@keyframes         bg-scrolling {
+  0% { background-position: $bg-width $bg-height; }
+}
+
+/* Main styles */
+body.home {
+
+    @media(max-width:400px){
+    .home-logo img{
+        width:100%;
+    }
+}
+    
+
+    margin-top: 13.5rem;
+    text-align: center;
+    background: url(/content/images/ellipse-black.svg) #f08d7e 30px;
+     -webkit-animation: bg-scrolling-reverse 10s  infinite; 
+    -moz-animation: bg-scrolling-reverse 10s infinite;
+    -o-animation: bg-scrolling-reverse 10s  infinite;
+    animation: bg-scrolling-reverse 10s infinite;
+     -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function:ease-out;
+    background-size: 75%;
+    -o-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+}
+
+
+@media(max-width:400px){
+    body.home{
+        background-size: 140%;
+    }
 }

@@ -16,28 +16,28 @@
     <link type="text/css" rel="stylesheet" href="/content/css/styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
     <title>stackfin - Stock Market Information</title>
   </head>
   <body>
-      <nav class="navbar navbar-expand-lg navbar-dark">
+      <nav class="navbar  fixed-top navbar-expand-lg navbar-dark">
   <div class="container">
-    <a class="navbar-brand" href="/"><img src="/content/images/logo-light.svg" alt="stackfin logo" loading="eager"></a>
+    <a class="navbar-brand" href="/"><img src="/content/images/logo_salmon.svg" alt="stackfin logo" loading="eager"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link" href="about.html">About</a>
         </li>
          <li class="nav-item">
           <a class="nav-link" href="ticker_page.html">Ticker Page</a>
-        </li>
+        </li>-->
       </ul>
       <form class="d-flex" action="/" method="POST">
-        <input name="stock_search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
+        <input name="stock_search" class="form-control me-2 stock-search" type="search" placeholder="Search Ticker" aria-label="Search">
+        <button class="btn stock_search--btn" type="submit"><span class="oi oi-magnifying-glass"></span></button>
       </form>
     </div>
   </div>

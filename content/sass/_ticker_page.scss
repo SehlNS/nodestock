@@ -1,12 +1,12 @@
 .ticker-page-header{
     border-bottom:1px solid $dark_grey;
     padding-bottom:15px;
-    margin-bottom:30px;
+    margin-bottom:15px;
 
     .price {
         font-size: 30px;
         font-weight: bold;
-        color: $brand-primary;
+        color: $brand-secondary;
         display:flex;
         align-items: center;
 
@@ -66,4 +66,48 @@ img.company-logo {
 
 .tickerPage-topTable span {
     float: right;
+}
+
+//News
+
+.news-block{
+
+    margin-bottom:15px;
+
+    img {
+        border-radius: 5px;
+    }
+    *{
+        vertical-align:top;
+    }
+    span.source-tag {
+        font-size: 12px;
+        font-weight: 600;
+        color: $brand-secondary;
+        margin-top: -5px;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    a.headline-link {
+        color: #fff;
+        text-decoration: none;
+        /* border-bottom: 2px solid #e2bab1; */
+        font-size: 18px;
+        font-weight: 600;
+
+        &:hover{
+            transition:1s;
+            color:$brand-primary;
+        }
+    }
+
+    .summary p {
+        color:$light_grey;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

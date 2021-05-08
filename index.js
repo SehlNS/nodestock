@@ -37,7 +37,7 @@ app.use(bodyParser.json())
  
  // create call API function
 function call_api(finishedAPI, ticker){
-    request('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+    request('https://cloud.iexapis.com/v1/stock/' + ticker + '/batch?types=quote,news,company&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
         if (err) {return console.log(err);}
         if(res.statusCode === 200){
       //console.log(body);

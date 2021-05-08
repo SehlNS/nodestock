@@ -1,5 +1,11 @@
 .navbar{
-    background-color:#1a1a1b;
+    background-color:$background_black;
+}
+
+.home{
+    .navbar{
+        background-color: transparent;
+    }
 }
 .navbar-brand{
     padding-top:0;
@@ -9,10 +15,34 @@ a.navbar-brand img {
     width: 115px;
 }
 
+.home-logo img{
+    width:300px;
+}
+
 .navbar-dark .navbar-nav .nav-link{
     color:$body_color;
 }
 
 .navbar-dark .navbar-toggler{
     border:none;
+}
+
+input.stock-search{
+    border-radius:50px;
+    border:1px solid $light_grey;
+    background-color:transparent!important;
+}
+
+input.stock-search:focus {
+    border-color: $brand-primary;
+    box-shadow: none;
+    transition:1s;
+}
+
+.btn.stock_search--btn{
+    padding:0;
+}
+
+span.oi.oi-magnifying-glass {
+    color: #f08d7e;
 }

@@ -1,55 +1,139 @@
 <div class="ticker-page-header">
     <div class="top-logo">
-        <div class="circle-logo"><img class="company-logo" src="https://storage.googleapis.com/iex/api/logos/{{stock.symbol}}.png"></div>
+        <div class="circle-logo"><img class="company-logo" src="https://storage.googleapis.com/iex/api/logos/{{stock.quote.symbol}}.png"></div>
         <span class="ticker-badge">{{stock.symbol}}</span>
     </div>
-    <h1><b>{{stock.companyName}}</b></h1>
+    <h1><b>{{stock.quote.companyName}}</b></h1>
     <div class="price">
-        <div>${{stock.latestPrice}}</div>
-       {{#negPosChange stock.change}}
+        <div>${{stock.quote.latestPrice}}</div>
+       {{#negPosChange stock.quote.change}}
              {{test}}
         {{/negPosChange}}
         </div>
-    <div class="subtext">{{stock.primaryExchange}}</div>
+    <div class="subtext">{{stock.quote.primaryExchange}}</div>
 </div>
-
 
 
 <div class="row">
+<ul class="nav nav-pills mb-3 ticker-page-nav" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">Overview</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-company-tab" data-bs-toggle="pill" data-bs-target="#pills-company" type="button" role="tab" aria-controls="pills-company" aria-selected="false">Company</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-contact-chart" data-bs-toggle="pill" data-bs-target="#pills-chart" type="button" role="tab" aria-controls="pills-chart" aria-selected="false">News</button>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
+    <div class="row">
+
+        <!--OVERVIEW TAB-->
     <div class="mb-3 col-12 col-md-4 tickerPage-topTable">
 
-         <div><strong>Latest Price: </strong><span>${{stock.latestPrice}}</span></div>
-         <div><strong>Previous Close: </strong><span>${{stock.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.changePercent}}%</span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.week52Low}}</span></div>
+         <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
+         <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
+         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
+         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
+         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
+         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
+         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
     </div>
         <div class="mb-3 col-12 col-md-4 tickerPage-topTable">
-         <div><strong>Latest Price: </strong><span>${{stock.latestPrice}}</span></div>
-         <div><strong>Previous Close: </strong><span>${{stock.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.changePercent}}%</span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.week52Low}}</span></div>
+         <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
+         <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
+         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
+         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
+         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
+         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
+         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
     </div>
         <div class="mb-3 col-12  col-md-4 tickerPage-topTable">
-         <div><strong>Latest Price: </strong><span>${{stock.latestPrice}}</span></div>
-         <div><strong>Previous Close: </strong><span>${{stock.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.changePercent}}%</span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.week52Low}}</span></div>
+      <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
+         <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
+         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
+         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
+         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
+         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
+         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
     </div>
 </div>
+  </div>
+
+  <!--COMPANY TAB-->
+  <div class="tab-pane fade" id="pills-company" role="tabpanel" aria-labelledby="pills-company-tab">
+   
+   <div class="row">   
+    <div class="mb-2 col-12 col-md-6">
+         <div><strong>Sector: </strong><span>{{stock.company.sector}}</span></div>
+         <div><strong>CEO: </strong><span>{{stock.company.CEO}}</span></div>
+         <div><strong>Tags: </strong><span>{{stock.company.tags}}</span></div>
+    </div>
+</div>
+
+   <p>
+     <a target="_blank" href="{{stock.company.website}}">Website</a><br>
+    </p>
+    <h5>Profile</h2>
+     <p>
+        {{stock.company.description}}<br>
+    </p>
+     {{stock.company.address}} adress1<br>
+     {{stock.company.address2}} address2<br>
+     {{stock.company.state}} state<br>
+     {{stock.company.city}} city<br>
+     {{stock.company.country}} country<br>
+
+  </div>
+
+    <!--NEWS TAB-->
+  <div class="tab-pane fade" id="pills-chart" role="tabpanel" aria-labelledby="pills-chart-tab">
+      {{#each stock.news}}
+      <div class="row">
+
+        <div class="col-12 d-flex news-block">
+          <div class="col-2 col-md-1">
+          <img width="100%" src="{{this.image}}">
+          </div>
+          <div class="col-10 px-2">
+             <div class="col-12"><span class="source-tag">{{this.source}}</span></div>
+          <a class="headline-link" href="{{this.url}}">{{this.headline}}</a>
+          <div class="col-12 summary"><p>{{this.summary}}</p></div>
+          </div>
+          </div>
+
+       
+      
+
+      </div>
+      {{/each}}
+  </div>
+
+
+
+</div>
+</div>
+
+
 
 
 
 <!--
-{{#each stock}}
+  {{#each stock.news}}
+{{@key}} | {{this.headline}}<br>
+{{@key}} | {{this.source}}<br>
+{{@key}} | {{this.summary}}<br>
+{{@key}} | {{this.related}}<br>
+{{@key}} | {{this.image}}<br>
+{{/each}}
+
+{{#each stock.quote}}
+{{@key}} | {{this}}<br>
+{{/each}}
+
+{{#each stock.company}}
 {{@key}} | {{this}}<br>
 {{/each}}
 -->
