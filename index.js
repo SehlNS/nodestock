@@ -9,11 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 
 
-//Set handlebars middleware
-app.engine('handlebars', exphbs.create({
-
-    //create custom helpers here
-    defaultLayout: 'main',
+app.engine('handlebars', exphbs({
     helpers:{
         negPosChange: function(value, options){
             if(value > 0) {
@@ -27,10 +23,11 @@ app.engine('handlebars', exphbs.create({
                 return "<div>" + options.fn({test: value}) + "</div>";
               }
         }
-    }
+    },
+defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars')
 
-}).engine);
-app.set('view engine', 'handlebars');
 
 
 
