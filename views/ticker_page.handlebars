@@ -35,29 +35,37 @@
 
          <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
          <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
+         <div><strong>Percent Change: </strong><span>
+           {{#roundPercent stock.quote.changePercent}}
+             {{test}}
+        {{/roundPercent}}
+         </span></div>
          <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
          <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
          <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
+         <div><strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
     </div>
         <div class="mb-3 col-12 col-md-4 tickerPage-topTable">
-         <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
-         <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
-    </div>
-        <div class="mb-3 col-12  col-md-4 tickerPage-topTable">
-      <div><strong>Latest Price: </strong><span>${{stock.quote.latestPrice}}</span></div>
-         <div><strong>Previous Close: </strong><span>${{stock.quote.previousClose}}</span></div>
-         <div><strong>Percent Change: </strong><span>{{stock.quote.changePercent}}%</span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
-         <div>strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
+         <div><strong>P/E Ratio: </strong><span>
+           {{#basicRound stock.stats.peRatio}}
+             {{test}}
+        {{/basicRound}}
+         </span></div>
+         <div><strong>Beta: </strong><span>
+            {{#basicRound stock.stats.beta}}
+             {{test}}
+        {{/basicRound}}
+         </span></div>
+         <div><strong>TTM EPS: </strong><span>${{stock.stats.ttmEPS}}</span></div>
+         <div><strong>TTM Dividend Rate: </strong><span>{{#basicRound stock.stats.ttmDividendRate}}
+             {{test}}
+        {{/basicRound}}</span></div>
+         <div><strong>Dividend Yield: </strong><span>
+             {{#basicPercent stock.stats.dividendYield}}
+             {{test}}
+        {{/basicPercent}}%
+         </span></div>
+         <div><strong>Next Earnings Date: </strong><span>{{stock.stats.nextEarningsDate}}</span></div>
     </div>
 </div>
   </div>
@@ -121,6 +129,11 @@
 
 
 <!--
+  
+{{#each stock.stats}}
+{{@key}} | {{this}}<br>
+{{/each}}
+
   {{#each stock.news}}
 {{@key}} | {{this.headline}}<br>
 {{@key}} | {{this.source}}<br>
@@ -132,6 +145,7 @@
 {{#each stock.quote}}
 {{@key}} | {{this}}<br>
 {{/each}}
+
 
 {{#each stock.company}}
 {{@key}} | {{this}}<br>

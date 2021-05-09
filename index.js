@@ -38,7 +38,18 @@ app.engine('handlebars', exphbs({
                 return "<span>" + options.fn({test: value}) + "%</span>"; 
               }
         
-        }
+        },
+        basicRound: function(value, options){
+
+           return (value).toFixed(2)
+        
+        },
+
+        basicPercent: function(value, options){
+
+            return (value * 100).toFixed(2);
+         
+         }
     },
 defaultLayout: 'main'
 }));
@@ -54,7 +65,7 @@ app.use(bodyParser.json())
  
  // create call API function
 function call_api(finishedAPI, ticker){
-    request('https://cloud.iexapis.com/v1/stock/' + ticker + '/batch?types=quote,news,company&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+    request('https://cloud.iexapis.com/v1/stock/' + ticker + '/batch?types=quote,news,stats,company&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
         if (err) {return console.log(err);}
         if(res.statusCode === 200){
       //console.log(body);
