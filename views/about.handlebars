@@ -1,2 +1,42 @@
-<h1>About me HB</h1>
-<p>This is my first node program!</p>
+<h1>Most Active</h1>
+<div class="row">
+<div class="col-12">
+    <div class="table responsive">
+<table class="col-12 table table-sm table-dark stock-table">
+<thead>
+    <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Change</th>
+        <th>%change</th>
+        <th>Volume</th>
+        <th>P/E</th>
+        <th>Market Cap</th>
+    </tr>
+</thead>
+
+<tbody>
+    {{#each stock}}
+     <tr>
+        <td>{{this.symbol}}</td>
+        <td>{{this.companyName}}</td>
+        <td>{{this.latestPrice}}</td>
+        <td>{{this.change}}</td>
+        <td>{{this.changePercent}}</td>
+        <td>{{this.volume}}</td>
+        <td>{{this.peRatio}}</td>
+        <td>{{this.marketCap}}</td>
+    </tr>
+    {{/each}}
+</tbody>
+    </table>
+
+</div>
+</div>
+</div>
+
+<!--
+{{#each stock}}
+{{@key}} | {{this.symbol}}<br>
+{{/each}}-->

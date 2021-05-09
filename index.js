@@ -46,6 +46,16 @@ function call_api(finishedAPI, ticker){
     });
 }
 
+function call_api2(finishedAPI){
+    request('https://cloud.iexapis.com/v1/stock/market/collection/list?collectionName=mostactive&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+        if (err) {return console.log(err);}
+        if(res.statusCode === 200){
+      //console.log(body);
+        finishedAPI(JSON.parse(body));
+        }
+    });
+}
+
 
 
 
@@ -70,7 +80,11 @@ app.post('/', function (req, res) {
 
 //Create about page route
 app.get('/about.html', function (req, res) {
-    res.render('about');
+    call_api2(function(doneAPI){
+        res.render('about', {
+            stock: doneAPI
+        });
+    }); 
 });
 
 //Create about page route
