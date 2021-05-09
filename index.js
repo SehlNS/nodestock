@@ -6,6 +6,7 @@ const request = require("request");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
+
 app.engine('handlebars', exphbs({
     //Include helpers here
     helpers:{
@@ -21,6 +22,22 @@ app.engine('handlebars', exphbs({
               else{
                 return "<div>" + options.fn({test: value}) + "</div>";
               }
+        },
+
+        roundPercent: function(value, options){
+
+            value =  (value * 100).toFixed(2);
+            if(value > 0) {
+                return "<span class=\"positive\">" + "+" + options.fn({test: value}) + "%</span";
+              }
+              else if(value < 0){
+                return "<span class=\"negative\">" + options.fn({test: value}) + "%</span>";
+              }
+
+              else{
+                return "<span>" + options.fn({test: value}) + "%</span>"; 
+              }
+        
         }
     },
 defaultLayout: 'main'
@@ -54,6 +71,7 @@ function call_api2(finishedAPI){
         finishedAPI(JSON.parse(body));
         }
     });
+
 }
 
 
@@ -90,7 +108,6 @@ app.get('/hub.html', function (req, res) {
 app.get('/', function (req, res) {
     res.render('home/home', {layout : 'home-template'});
 });
-
 
 // Set static folder
 app.use(express.static(path.join(__dirname, '/')));

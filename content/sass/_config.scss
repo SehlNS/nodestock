@@ -112,6 +112,7 @@ body.home {
 
 //Stock tables - make partial
 .stock-table{
+
     --bs-table-bg:transparent;
 
     button {
@@ -123,8 +124,13 @@ body.home {
 
         &.hover,&.active{
             color:$brand-primary ;
+            transition: 1s;
         }
     }
+}
+
+.na-value{
+    color:$dark_grey;
 }
 
 .positive{
