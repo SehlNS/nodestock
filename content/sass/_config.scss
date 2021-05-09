@@ -109,6 +109,28 @@ body.home {
     }
 }
 
+
+//Stock tables - make partial
 .stock-table{
     --bs-table-bg:transparent;
+
+    button {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        font-weight: 600;
+        color: $brand-secondary;
+
+        &.hover,&.active{
+            color:$brand-primary ;
+        }
+    }
+}
+
+.positive{
+    color:$stock_green;
+}
+
+.negative{
+    color:$stock_red;   
 }

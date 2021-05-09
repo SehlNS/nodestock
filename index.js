@@ -57,8 +57,6 @@ function call_api2(finishedAPI){
 }
 
 
-
-
 //Set handlebar index GET route
 app.get('/ticker_page.html', function (req, res) {
     call_api(function(doneAPI){
@@ -78,16 +76,17 @@ app.post('/', function (req, res) {
     }, req.body.stock_search.toLowerCase().trim());  
 });
 
-//Create about page route
-app.get('/about.html', function (req, res) {
+
+//Create Hub page route
+app.get('/hub.html', function (req, res) {
     call_api2(function(doneAPI){
-        res.render('about', {
+        res.render('hub', {
             stock: doneAPI
         });
     }); 
 });
 
-//Create about page route
+//Create home page route
 app.get('/', function (req, res) {
     res.render('home/home', {layout : 'home-template'});
 });

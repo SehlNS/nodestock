@@ -1,7 +1,7 @@
 <h1>Most Active</h1>
 <div class="row">
 <div class="col-12">
-    <div class="table responsive">
+    <div class="table-responsive">
 <table class="col-12 table table-sm table-dark stock-table">
 <thead>
     <tr>
@@ -19,10 +19,21 @@
 <tbody>
     {{#each stock}}
      <tr>
-        <td>{{this.symbol}}</td>
+        <td>
+
+                <form action="/" method="POST" class="inline">
+                <input type="hidden" >
+                <button type="submit" value="{{this.symbol}}" name="stock_search" class="link-button">
+                   {{this.symbol}}
+                </button>
+                </form>
+
+        </td>
         <td>{{this.companyName}}</td>
         <td>{{this.latestPrice}}</td>
-        <td>{{this.change}}</td>
+        <td>{{#negPosChange this.change}}
+             {{test}}
+        {{/negPosChange}}</td>
         <td>{{this.changePercent}}</td>
         <td>{{this.volume}}</td>
         <td>{{this.peRatio}}</td>
