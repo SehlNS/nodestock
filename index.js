@@ -58,6 +58,16 @@ app.engine('handlebars', exphbs({
               }
         
         },
+        cryptoRound: function(value){
+            if(value >= 1){
+                return parseFloat(value).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");; 
+            }
+            else{
+                return parseFloat(value).toFixed(4);
+            }
+      
+    
+    },
         basicRound: function(value, options){
 
            return (value).toFixed(2)
@@ -124,6 +134,16 @@ function call_apiLosers(finishedAPI){
     });
 }
 
+function call_apiCrypto(finishedAPI){
+    request('https://api.nomics.com/v1/currencies/ticker?key=177c96b8a906ce4a9d914e53daddd62aff69b4a5&ids=BTC,ETH,XRP,BNB,ADA,DOGE,USDT,DOT,ICP,BCH,UNI,LTC,LINK,XLM,USDC,SOL,ETC,VET,MATIC,EOS,THETA,TRX,WBTC,FIL,BUSD,XMR,SHIB&interval=1h,1d,7d', function (err, res, body) {
+        if (err) {return console.log(err);}
+        if(res.statusCode === 200){
+      //console.log(body);
+        finishedAPI(JSON.parse(body));
+        }
+    });
+}
+
 
 //Set handlebar index GET route
 app.get('/ticker_page.html', function (req, res) {
@@ -144,6 +164,14 @@ app.post('/', function (req, res) {
     }, req.body.stock_search.toLowerCase().trim());  
 });
 
+//Create Hub page route
+app.get('/crypto.html', function (req, res) {
+    call_apiCrypto(function(doneAPI){
+        res.render('crypto', {
+            crypto: doneAPI
+        });
+    }); 
+});
 
 //Create Hub page route
 app.get('/hub.html', function (req, res) {

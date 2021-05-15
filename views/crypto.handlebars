@@ -1,0 +1,95 @@
+<h1>Cryptocurrencies</h1>
+
+<div class="row">
+<div class="col-12">
+
+   <div class="table-responsive minimal-sort-table">
+<table class="col-12 table table-sm table-dark stock-table" id="sortable-table">
+<thead>
+    <tr>
+        <th>Rank</th>
+        <th>name</th>
+        <th>Symbol</th>
+        <th>Price</th>
+        <th>Market Cap</th>
+        <th>1h change</th>
+        <th>24h change</th>
+        <th>7d change</th>
+        <th>Circulating Supply</th>
+    </tr>
+</thead>
+
+<tbody>
+    {{#each crypto}}
+     <tr>
+           <td>{{this.rank}}</td>
+        <td><img style="margin-right:15px;" width="20px" src="{{this.logo_url}}">{{this.name}}</td>
+        <td>{{this.symbol}}</td>
+        <td>
+              ${{#cryptoRound this.price}}
+             {{test}}
+             {{/cryptoRound}}
+        </td>
+        <td>
+              ${{#commas this.market_cap}}
+             {{test}}
+             {{/commas}}
+        </td>
+        <td>
+            {{#roundPercent this.1h.price_change_pct}}
+                {{test}}
+            {{/roundPercent}}
+        </td>
+        <td>
+              {{#roundPercent this.1d.price_change_pct}}
+                {{test}}
+            {{/roundPercent}}
+        </td>
+        <td>
+             {{#roundPercent this.7d.price_change_pct}}
+                {{test}}
+            {{/roundPercent}}
+        </td>
+          <td>
+            {{#commas this.circulating_supply}}
+            {{test}}
+            {{/commas}}
+        </td>
+    </tr>
+    {{/each}}
+</tbody>
+    </table>
+
+</div>
+</div>
+</div>
+
+<script>
+
+    //set active link
+    var segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
+    var segment_array = segment_str.split( '/');
+    var last_segment = segment_array.pop();
+    var page = last_segment.replace( '-',' ');
+
+
+switch(page) {
+  case "most active":
+    var element = document.getElementById("most-active");
+    element.classList.add("active");
+    break;
+  case "gainers":
+    var element = document.getElementById("gainers");
+    element.classList.add("active");
+    break;
+    case "losers":
+    var element = document.getElementById("losers");
+    element.classList.add("active");
+    break;
+  default:
+     var element = document.getElementById("most-active");
+     element.classList.add("active");
+    }
+    </script>
+
+
