@@ -8,6 +8,12 @@ $light_grey:#ababab;
 $stock_red:#dc3545;
 $stock_green:#49dc35;
 
+@media(max-width:991px){
+    .mobile-hide{
+        display:none;
+    }
+}
+
 *{
     font-family: $brand_font;
 }
@@ -76,6 +82,22 @@ $bg-height: 50px;
 }
 
 /* Main styles */
+
+.homepageLinks {
+    margin-top:15px;
+
+    a{
+
+        &:hover{
+            color: #fff;
+            transition: 1s;
+        }
+        text-decoration: none;
+        color:$light_grey;
+    }
+
+}
+
 body.home {
 
     @media(max-width:500px){
@@ -90,16 +112,7 @@ body.home {
 
     margin-top: 13.5rem;
     text-align: center;
-    background: url(/content/images/ellipse-black.svg) #f08d7e 30px;
-     -webkit-animation: bg-scrolling-reverse 10s  infinite; 
-    -moz-animation: bg-scrolling-reverse 10s infinite;
-    -o-animation: bg-scrolling-reverse 10s  infinite;
-    animation: bg-scrolling-reverse 10s infinite;
-     -webkit-animation-timing-function: ease-out;
-    -moz-animation-timing-function:ease-out;
-    background-size: 75%;
-    -o-animation-timing-function: ease-out;
-    animation-timing-function: ease-out;
+    background: $background_black;
 }
 
 

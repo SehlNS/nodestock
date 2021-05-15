@@ -40,16 +40,20 @@
              {{test}}
         {{/roundPercent}}
          </span></div>
-         <div><strong>Market Cap: </strong><span>{{stock.quote.marketCap}}</span></div>
-         <div><strong>YTD Change: </strong><span>{{stock.quote.ytdChange}}%</span></div>
-         <div><strong>52 Week High: </strong><span>{{stock.quote.week52High}}</span></div>
-         <div><strong>52 Week Low:</strong><span>{{stock.quote.week52Low}}</span></div>
+         <div><strong>Market Cap: </strong><span>${{#commas stock.quote.marketCap}}
+             {{test}}
+        {{/commas}}</span></div>
+         <div><strong>YTD Change: </strong><span>  {{#roundPercent stock.quote.ytdChange}}
+             {{test}}
+        {{/roundPercent}}</span></div>
+         <div><strong>52 Week High: </strong><span>${{stock.quote.week52High}}</span></div>
+         <div><strong>52 Week Low:</strong><span>${{stock.quote.week52Low}}</span></div>
     </div>
         <div class="mb-3 col-12 col-md-4 tickerPage-topTable">
          <div><strong>P/E Ratio: </strong><span>
-           {{#basicRound stock.stats.peRatio}}
-             {{test}}
-        {{/basicRound}}
+           {{#peRatio stock.stats.peRatio}}
+                {{test}}
+        {{/peRatio}}
          </span></div>
          <div><strong>Beta: </strong><span>
             {{#basicRound stock.stats.beta}}

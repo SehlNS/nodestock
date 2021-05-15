@@ -1,20 +1,29 @@
 //Ticker page tabs
-.ticker-page-nav.nav-pills .nav-link.active, .nav-pills.ticker-page-nav .show>.nav-link {
+
+.ticker-page-nav.nav-pills .nav-link.active, 
+.nav-pills.ticker-page-nav .show>.nav-link {
     background-color: transparent;
     color:#fff;
     font-weight:600;
     border-bottom:3px solid $brand-primary;
 }
-
+.ticker-page-nav.nav-pills input,
 .ticker-page-nav.nav-pills .nav-link {
     padding: 0;
     margin-right: 10px;
     margin-left: 10px;
     color: $light_grey;
     border-radius:0;
+    background-color:transparent;
+    border:none;
 }
 
+.ticker-page-nav.nav-pills input:hover,
 .ticker-page-nav.nav-pills .nav-link:hover{
     color:#fff;
     transition: 1s;
+}
+
+table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled){
+    padding-right:25px;
 }

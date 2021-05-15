@@ -10,6 +10,25 @@ const PORT = process.env.PORT || 5000;
 app.engine('handlebars', exphbs({
     //Include helpers here
     helpers:{
+
+        commas: function(value){
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+
+        //check if price change was negative or poositive
+        peRatio: function(value, options){
+            var val = (value).toFixed(2);
+            
+            if(value < 20 && value >= 1) {
+                return "<div class=\"positive\">" + options.fn({test: val}) + "</div>";
+              }
+              
+              else{
+                return "<div class=\"negative\">" + options.fn({test: val}) + "</div>";
+              }
+
+        },
+
         //check if price change was negative or poositive
         negPosChange: function(value, options){
             if(value > 0) {
@@ -85,6 +104,26 @@ function call_api2(finishedAPI){
 
 }
 
+function call_apiGainers(finishedAPI){
+    request('https://cloud.iexapis.com/v1/stock/market/collection/list?collectionName=gainers&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+        if (err) {return console.log(err);}
+        if(res.statusCode === 200){
+      //console.log(body);
+        finishedAPI(JSON.parse(body));
+        }
+    });
+}
+
+function call_apiLosers(finishedAPI){
+    request('https://cloud.iexapis.com/v1/stock/market/collection/list?collectionName=losers&token=pk_403d2f3af3314f18b2fcbfb21198b874', function (err, res, body) {
+        if (err) {return console.log(err);}
+        if(res.statusCode === 200){
+      //console.log(body);
+        finishedAPI(JSON.parse(body));
+        }
+    });
+}
+
 
 //Set handlebar index GET route
 app.get('/ticker_page.html', function (req, res) {
@@ -108,6 +147,32 @@ app.post('/', function (req, res) {
 
 //Create Hub page route
 app.get('/hub.html', function (req, res) {
+    call_api2(function(doneAPI){
+        res.render('hub', {
+            stock: doneAPI
+        });
+    }); 
+});
+
+
+//Create Hub page route
+app.post('/gainers', function (req, res) {
+    call_apiGainers(function(doneAPI){
+        res.render('hub', {
+            stock: doneAPI
+        });
+    }); 
+});
+
+app.post('/losers', function (req, res) {
+    call_apiLosers(function(doneAPI){
+        res.render('hub', {
+            stock: doneAPI
+        });
+    }); 
+});
+
+app.post('/most-active', function (req, res) {
     call_api2(function(doneAPI){
         res.render('hub', {
             stock: doneAPI
