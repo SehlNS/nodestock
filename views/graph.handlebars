@@ -1,0 +1,187 @@
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+
+<h1>GRAPH</h1>
+
+<style>
+
+#chart{
+    width:1000px;
+    height:500px;
+    margin:50px auto;
+}
+
+svg{
+    background-color:transparent;
+}
+
+.dot{
+    stroke:#1a1a1b;
+    stroke-width: 1px;
+}
+
+.axis line, .axis path{
+    stroke: #bbb;
+}
+
+.axis text{
+    fill:#bbb;
+    font-size:11px;
+}
+#tooltip{
+    position:absolute;
+    background-color:#fff;
+    padding:20px;
+    border:1px solid #333;
+    color:#333;
+    opacity:0;
+    border-radius:25px;
+}
+
+.axisLabel{
+    font-size:11px;
+    fill:#bbb;
+}
+
+</style>
+
+
+<div id="chart"></div>
+<div id="tooltip"></div>
+
+
+<script type="text/javascript">
+var margin=30, width = 1000, height = 500, rValues = [2,15];
+var circles, xScale, yScale;
+
+    var svg = d3.select('#chart')
+    .append('svg')
+    .attr('width',width + "px")
+    .attr('height',height + 'px')
+
+
+    d3.csv('/content/boston-housing.csv').then(function(data){
+       // console.log(data);
+
+       data = data.sort(function(a,b){
+           return a.charles - b.charles;
+       })
+
+        xMinMax = d3.extent(data, function(d){
+            return parseFloat(d.poor);
+        });
+
+          yMinMax = d3.extent(data, function(d){
+            return parseFloat(d.rooms);
+        });
+
+          rMinMax = d3.extent(data, function(d){
+            return parseFloat(d.value);
+        });
+
+        //console.log(xMinMax)
+
+       xScale = d3.scaleLinear()
+            .domain([xMinMax[1],xMinMax[0]])
+            .range([margin + rValues[1],width-margin-rValues[1]]);
+
+        yScale = d3.scaleLinear()
+            .domain([yMinMax[1],yMinMax[0]])
+            .range([margin + rValues[1],height-margin-rValues[1]]);
+
+        rScale = d3.scaleLinear()
+            .domain([rMinMax[0],rMinMax[1]])
+            .range([rValues[0],rValues[1]]);
+
+        cScale = d3.scaleOrdinal()
+            .domain([0,1])
+            .range(['#eee','#f08d7e']);
+        
+
+       circles = svg.selectAll('.dot')
+       .data(data)
+       .enter()
+       .append('circle')
+       .attr('class','dot')
+       .attr('cx',function(d){
+           //console.log(d);
+           return xScale(d.poor);
+       })
+       .attr('cy',function(d){
+            return yScale(d.rooms);
+       })
+       .attr('r',0)
+       .attr('fill',function(d){
+           return cScale(d.charles)
+       })
+       .style('opacity', function(d){
+           return d.charles == 1 ? 1 : 0.3;
+       })
+       .on('mouseover', function(d){         
+           info = 'X | poor ' + d.poor + '<br>';
+           info += 'Y | rooms ' + d.rooms + '<br>';
+           info += 'R | value ' + d.value + '<br>';
+           info += 'C | charles ' + d.charles;
+           d3.select('#tooltip')
+            .html(info)
+            .style('left', d3.event.pageX - 100 + 'px')
+            .style('top', d3.event.pageY - 200 + 'px')
+            .style('opacity', 0.85);
+       })
+       
+       .on('mouseout', function(){         
+           d3.select('#tooltip')
+            .style('opacity', 0)
+       });
+
+       //xAxis = d3.axisBottom(xScale).tickValues([xMinMax[0],xMinMax[1]]);
+       //yAxis = d3.axisLeft(yScale).tickValues([yMinMax[0],yMinMax[1]]);
+
+       xAxis = d3.axisBottom(xScale).ticks(0);
+       yAxis = d3.axisLeft(yScale).tickValues([yMinMax[1],yMinMax[0]]);
+
+       xAxisG = svg.append('g')
+        .attr('id','xAxis')
+        .attr('class','axis')
+        .style('color','#000');
+
+         yAxisG = svg.append('g')
+        .attr('id','yAxis')
+        .attr('class','axis')
+        .style('color','#000');
+
+        xAxisG.call(xAxis)
+            .attr('transform','translate(0,' + (height-margin) + ')');
+
+        yAxisG.call(yAxis)
+        .attr('transform','translate(' + margin + ',0)');
+
+
+        svg.append('text')
+            .attr('x', xScale(xMinMax[0]))
+            .attr('y', yScale(yMinMax[0]) + margin)
+            .attr('text-anchor','middle')
+            .attr('class','axisLabel')
+            .text('more wealthy')
+
+             svg.append('text')
+            .attr('x', xScale(xMinMax[1]))
+            .attr('y', yScale(yMinMax[0]) + margin)
+            .attr('text-anchor','middle')
+            .attr('class','axisLabel')
+            .text('less wealthy')
+
+        update();
+
+    });
+
+    function update(){
+        circles.transition()
+            .delay(function(d,i){
+                //console.log(i);
+                return i * 7;
+            })
+            .attr('r', function(d){
+            return rScale(d.value);
+       })
+    };
+</script>

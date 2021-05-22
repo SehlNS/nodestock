@@ -209,6 +209,11 @@ app.post('/most-active', function (req, res) {
 });
 
 //Create home page route
+app.get('/graph.html', function (req, res) {
+    res.render('graph');
+});
+
+//Create home page route
 app.get('/', function (req, res) {
     res.render('home/home', {layout : 'home-template'});
 });
