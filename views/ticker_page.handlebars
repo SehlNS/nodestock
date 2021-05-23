@@ -1,7 +1,10 @@
 <div class="ticker-page-header">
-    <div class="top-logo">
+
+
+    <div class="leftCont">
+          <div class="top-logo">
         <div class="circle-logo"><img class="company-logo" src="https://storage.googleapis.com/iex/api/logos/{{stock.quote.symbol}}.png"></div>
-        <span class="ticker-badge">{{stock.symbol}}</span>
+        <span class="ticker-badge" id="stockSymbol">{{stock.quote.symbol}}</span>
     </div>
     <h1><b>{{stock.quote.companyName}}</b></h1>
     <div class="price">
@@ -11,6 +14,12 @@
         {{/negPosChange}}
         </div>
     <div class="subtext">{{stock.quote.primaryExchange}}</div>
+    </div>
+
+<div class="rightCont">
+    <div id="chart"></div>
+<div id="tooltip"></div>
+</div>
 </div>
 
 
@@ -161,3 +170,187 @@
 {{@key}} | {{this}}<br>
 {{/each}}
 -->
+
+
+
+
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+
+<style>
+.ticker-page-header {
+    display: flex;
+}
+
+#chart{
+    width:500px;
+    height:250px;
+    margin:0;
+}
+
+svg{
+    background-color:transparent;
+}
+
+.dot{
+    stroke:#a93d2c;
+    stroke-width: 2px;
+}
+
+.axis line, .axis path{
+    stroke: #bbb;
+}
+
+.axis text{
+    fill:#bbb;
+    font-size:11px;
+}
+#tooltip{
+    position:absolute;
+    background-color:#fff;
+    padding:20px;
+    border:1px solid #333;
+    color:#333;
+    opacity:0;
+    border-radius:25px;
+    z-index:1050;
+}
+
+.axisLabel{
+    font-size:11px;
+    fill:#bbb;
+}
+
+</style>
+
+
+
+
+
+<script type="text/javascript">
+var margin=50, width = 500, height = 250, rValues = [2,10];
+var circles, xScale, yScale;
+
+    var svg = d3.select('#chart')
+    .append('svg')
+    .attr('width',width + "px")
+    .attr('height',height + 'px')
+
+//.textContent
+    var stockSymbolId = document.getElementById("stockSymbol");
+    var stockSymbol = stockSymbolId.innerText;
+
+    d3.json('https://cloud.iexapis.com/stable/stock/'+ stockSymbol +'/chart/1m?token=pk_403d2f3af3314f18b2fcbfb21198b874').then(function(data){
+       // console.log(data);
+
+      ///// data = data.sort(function(a,b){
+  //         return a.charles - b.charles;
+   //   })
+
+console.log(stockSymbol)
+
+        xMinMax = d3.extent(data, function(d){
+            return new Date(JSON.stringify(d.date));
+        });
+
+          yMinMax = d3.extent(data, function(d){
+            return parseFloat(d.close);
+        });
+
+          rMinMax = d3.extent(data, function(d){
+            return parseFloat(d.volume);
+        });
+
+        console.log(xMinMax)
+        console.log(yMinMax)
+        console.log(rMinMax)
+
+
+
+       xScale = d3.scaleTime()
+            .domain([xMinMax[0],xMinMax[1]])
+            .range([margin + rValues[1],width-margin-rValues[1]]);
+
+        yScale = d3.scaleLinear()
+            .domain([yMinMax[1],yMinMax[0]])
+            .range([margin + rValues[1],height-margin-rValues[1]]);
+
+        rScale = d3.scaleLinear()
+            .domain([rMinMax[0],rMinMax[1]])
+            .range([rValues[0],rValues[1]]);
+
+        cScale = d3.scaleOrdinal()
+            .domain([0,1])
+            .range(['#eee','#f08d7e']);
+        
+        
+        
+       circles = svg.selectAll('.dot')
+       .data(data)
+       .enter()
+       .append('circle')
+       .attr('class','dot')
+       .attr('cx',function(d){
+           //console.log(d);
+           return xScale(new Date(JSON.stringify(d.date)));
+       })
+       .attr('cy',function(d){
+            return yScale(d.close);
+       })
+       .attr('r',0)
+       .attr('fill','#f08d7e')
+       .style('opacity', 1)
+       .on('mouseover', function(d){         
+           info = 'X | date ' + d.date + '<br>';
+           info += 'Y | close ' + d.close + '<br>';
+           info += 'R | volume ' + d.volume + '<br>';
+           d3.select('#tooltip')
+            .html(info)
+            .style('left', d3.event.pageX - 100 + 'px')
+            .style('top', d3.event.pageY - 200 + 'px')
+            .style('opacity', 0.85);
+       })
+       
+       .on('mouseout', function(){         
+           d3.select('#tooltip')
+            .style('opacity', 0)
+       });
+
+       //xAxis = d3.axisBottom(xScale).tickValues([xMinMax[0],xMinMax[1]]);
+       //yAxis = d3.axisLeft(yScale).tickValues([yMinMax[0],yMinMax[1]]);
+
+       xAxis = d3.axisBottom(xScale).ticks(5);
+       yAxis = d3.axisLeft(yScale).ticks(5);
+
+       xAxisG = svg.append('g')
+        .attr('id','xAxis')
+        .attr('class','axis')
+        .style('color','#000');
+
+         yAxisG = svg.append('g')
+        .attr('id','yAxis')
+        .attr('class','axis')
+        .style('color','#000');
+
+        xAxisG.call(xAxis)
+            .attr('transform','translate(0,' + (height-margin) + ')');
+
+        yAxisG.call(yAxis)
+        .attr('transform','translate(' + margin + ',0)');
+
+
+
+        update();
+
+    });
+
+    function update(){
+        circles.transition()
+            .delay(function(d,i){
+                //console.log(i);
+                return i * 7;
+            })
+            .attr('r', function(d){
+            return rScale(d.volume);
+       })
+    };
+</script>

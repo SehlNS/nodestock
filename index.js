@@ -208,9 +208,13 @@ app.post('/most-active', function (req, res) {
     }); 
 });
 
-//Create home page route
+//Create graph page route
 app.get('/graph.html', function (req, res) {
     res.render('graph');
+});
+
+app.get('/graph2.html', function (req, res) {
+    res.render('graph2');
 });
 
 //Create home page route
