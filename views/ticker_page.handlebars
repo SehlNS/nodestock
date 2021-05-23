@@ -266,8 +266,9 @@ var circles, xScale, yScale;
 
 console.log(stockSymbol)
 
+
         xMinMax = d3.extent(data, function(d){
-            return new Date(JSON.stringify(d.date));
+            return new Date(JSON.stringify(d.date.replace(/\s/, 'T')));
         });
 
           yMinMax = d3.extent(data, function(d){
@@ -309,7 +310,7 @@ console.log(stockSymbol)
        .attr('class','dot')
        .attr('cx',function(d){
            //console.log(d);
-           return xScale(new Date(JSON.stringify(d.date)));
+           return xScale(new Date(JSON.stringify(d.date.replace(/\s/, 'T'))));
        })
        .attr('cy',function(d){
             return yScale(d.close);
@@ -329,7 +330,7 @@ console.log(stockSymbol)
        .attr('stroke','#1a1a1b')
        .style('opacity', 1)
        .on('mouseover', function(d){         
-           info = 'Date ' + d.date + '<br>';
+           info = 'Date ' + d.date.replace(/\s/, 'T') + '<br>';
            info += 'Close $' + d.close + '<br>';
            info += 'Volume ' + d.volume.toLocaleString() + '<br>';
            d3.select('#tooltip')
