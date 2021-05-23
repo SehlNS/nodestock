@@ -17,8 +17,8 @@
     </div>
 
 <div class="rightCont">
-    <div id="chart"></div>
-<div id="tooltip"></div>
+    <div id="chart"><div id="tooltip"></div></div>
+
 </div>
 </div>
 
@@ -39,11 +39,6 @@
   <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
     <div class="row">
 
-      <div class="col-12">
-        <div>Lows:{{stock.quote.week52Low}}</div>
-        <div>bar</div>
-        <div>{{stock.quote.week52High}}:High</div>
-        </div>
 
         <!--OVERVIEW TAB-->
     <div class="mb-3 col-12 col-md-4 tickerPage-topTable">
@@ -182,9 +177,8 @@
 }
 
 #chart{
-    width:500px;
-    height:250px;
     margin:0;
+    position:relative;
 }
 
 svg{
@@ -192,8 +186,7 @@ svg{
 }
 
 .dot{
-    stroke:#a93d2c;
-    stroke-width: 2px;
+   
 }
 
 .axis line, .axis path{
@@ -205,19 +198,28 @@ svg{
     font-size:11px;
 }
 #tooltip{
-    position:absolute;
-    background-color:#fff;
-    padding:20px;
-    border:1px solid #333;
-    color:#333;
+    position: absolute;
+    background-color: #fff;
+    padding: 5px 15px;
+    color: #333;
+    border-radius: 25px;
+    z-index: 1050;
     opacity:0;
-    border-radius:25px;
-    z-index:1050;
+    font-size: 12px;
 }
 
 .axisLabel{
     font-size:11px;
     fill:#bbb;
+}
+
+@media(max-width:767px){
+  .leftCont,.leftCont{
+    flex: 0 0 100%;
+  }
+  .ticker-page-header{
+    flex-direction: column;
+  }
 }
 
 </style>
@@ -227,7 +229,23 @@ svg{
 
 
 <script type="text/javascript">
-var margin=50, width = 500, height = 250, rValues = [2,10];
+var screenWidth = window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
+
+if(screenWidth > 700){
+  var margin=50, width = 500, height = 250, rValues = [2.5,10];
+}
+
+else if(screenWidth > 350 && screenWidth < 700){
+
+var margin=50, width = 350, height = 250, rValues = [2.5,5];
+}
+
+else{
+  var margin=50, width = 300, height = 250, rValues = [2.5,5];
+}
+
 var circles, xScale, yScale;
 
     var svg = d3.select('#chart')
@@ -239,7 +257,7 @@ var circles, xScale, yScale;
     var stockSymbolId = document.getElementById("stockSymbol");
     var stockSymbol = stockSymbolId.innerText;
 
-    d3.json('https://cloud.iexapis.com/stable/stock/'+ stockSymbol +'/chart/1m?token=pk_403d2f3af3314f18b2fcbfb21198b874').then(function(data){
+    d3.json('https://cloud.iexapis.com/stable/stock/'+ stockSymbol +'/chart/3m?token=pk_403d2f3af3314f18b2fcbfb21198b874').then(function(data){
        // console.log(data);
 
       ///// data = data.sort(function(a,b){
@@ -297,17 +315,28 @@ console.log(stockSymbol)
             return yScale(d.close);
        })
        .attr('r',0)
-       .attr('fill','#f08d7e')
+       .attr('fill',function(d){
+         if(d.change > 0){
+           return '#49dc35';
+         }
+         else if (d.change < 0){
+           return '#dc3545'
+         }
+         else{
+           return '#ccc'
+         }
+       })
+       .attr('stroke','#1a1a1b')
        .style('opacity', 1)
        .on('mouseover', function(d){         
-           info = 'X | date ' + d.date + '<br>';
-           info += 'Y | close ' + d.close + '<br>';
-           info += 'R | volume ' + d.volume + '<br>';
+           info = 'Date ' + d.date + '<br>';
+           info += 'Close $' + d.close + '<br>';
+           info += 'Volume ' + d.volume.toLocaleString() + '<br>';
            d3.select('#tooltip')
             .html(info)
-            .style('left', d3.event.pageX - 100 + 'px')
-            .style('top', d3.event.pageY - 200 + 'px')
-            .style('opacity', 0.85);
+            .style('top', '-10px')
+            .style('left', '0')
+            .style('opacity', 0.9);
        })
        
        .on('mouseout', function(){         
@@ -347,7 +376,7 @@ console.log(stockSymbol)
         circles.transition()
             .delay(function(d,i){
                 //console.log(i);
-                return i * 7;
+                return i * 15;
             })
             .attr('r', function(d){
             return rScale(d.volume);
